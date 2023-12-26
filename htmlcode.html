@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #taskInput, #deadlineInput, #priorityInput, #labelInput {
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 16px;
+            width: 60%;
+        }
+
+        #addTaskBtn {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #taskList {
+            list-style: none;
+            padding: 0;
+        }
+
+        .taskItem {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .deleteBtn {
+            background-color: #ff5c5c;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .highPriority {
+            color: #e74c3c;
+        }
+
+        .mediumPriority {
+            color: #f39c12;
+        }
+
+        .lowPriority {
+            color: #2ecc71;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task Management</h1>
+    
+    <input type="text" id="taskInput" placeholder="Task">
+    <input type="date" id="deadlineInput" placeholder="Deadline">
+    <select id="priorityInput">
+        <option value="high">High Priority</option>
+        <option value="medium">Medium Priority</option>
+        <option value="low">Low Priority</option>
+    </select>
+    <input type="text" id="labelInput" placeholder="Label">
+
+    <button id="addTaskBtn" onclick="addTask()">Add Task</button>
+
+    <ul id="taskList"></ul>
+
+    <script>
+        function addTask() {
+            var taskInput = document.getElementById('taskInput');
+            var deadlineInput = document.getElementById('deadlineInput');
+            var priorityInput = document.getElementById('priorityInput');
+            var labelInput = document.getElementById('labelInput');
+            var taskList = document.getElementById('taskList');
+
+            if (taskInput.value.trim() !== '') {
+                var taskItem = document.createElement('li');
+                taskItem.className = 'taskItem';
+
+                var deleteBtn = document.createElement('button');
+                deleteBtn.className = 'deleteBtn';
+                deleteBtn.innerHTML = 'Delete';
+                deleteBtn.onclick = function() {
+                    taskList.removeChild(taskItem);
+                };
+
+                taskItem.innerHTML = `
+                    <strong>Task:</strong> ${taskInput.value}<br>
+                    <strong>Deadline:</strong> ${deadlineInput.value}<br>
+                    <strong>Priority:</strong> <span class="${priorityInput.value}">${priorityInput.value.charAt(0).toUpperCase() + priorityInput.value.slice(1)}</span><br>
+                    <strong>Label:</strong> ${labelInput.value}<br>
+                `;
+                taskItem.appendChild(deleteBtn);
+                taskList.appendChild(taskItem);
+
+                taskInput.value = '';
+                deadlineInput.value = '';
+                priorityInput.value = 'high';
+                labelInput.value = '';
+            }
+        }
+    </script>
+</body>
+</html>
+
